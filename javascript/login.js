@@ -41,6 +41,7 @@ async function logInUser(e) {
     }
     spinner.classList.remove("hidden");
     submitBtn.disabled = true;
+    errorP.textContent = "";
     try {
         const userCredential = await signInWithEmailAndPassword(auth, userDetails.email, userDetails.password);
         const user = userCredential.user;
