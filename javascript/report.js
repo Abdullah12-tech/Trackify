@@ -464,7 +464,7 @@ function getWeekNumber(date) {
     const categoryMap = {};
     data.forEach(item => {
       if (!categoryMap[item.category]) categoryMap[item.category] = 0;
-      categoryMap[item.category] += item.amount;
+      categoryMap[item.category] += item.amount || 0;
     });
   
     let topCategory = '';
@@ -479,7 +479,7 @@ function getWeekNumber(date) {
   
     // Average Daily Spend
     const uniqueDates = [...new Set(data.map(item => new Date(item.date.seconds * 1000).toDateString()))];
-    const avgDailySpend = (totalSpending / uniqueDates.length).toFixed(2);
+    const avgDailySpend = (totalSpending / uniqueDates.length).toFixed(2) || 0;
   
     // Budget Adherence (Mocked for now)
     // const adherencePercentage = 82; // Replace with actual logic later
