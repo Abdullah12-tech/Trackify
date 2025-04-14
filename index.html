@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trackify</title>
+  <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
+<link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="shortcut icon" href="./images/trackify.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Spartan:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        accent: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d',
+                            800: '#9d174d',
+                            900: '#831843',
+                        },
+                        dark: {
+                            50: '#f9fafb',
+                            100: '#f3f4f6',
+                            200: '#e5e7eb',
+                            300: '#d1d5db',
+                            400: '#9ca3af',
+                            500: '#6b7280',
+                            600: '#4b5563',
+                            700: '#374151',
+                            800: '#1f2937',
+                            900: '#111827',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-in-out',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
+</head>
+<body>
+  <!-- component -->
+<!-- navbar goes here -->
+<!-- component -->
+<nav class="relative sticky top-0 z-50 px-4 py-4 flex justify-between items-center bg-white shadow-md">
+		<a class="text-2xl flex items-center font-bold" href="#">
+			Trackify
+		</a>
+		<div class="lg:hidden">
+			<button class="navbar-burger flex items-center text-blue-600 p-3">
+				<svg class="block h-4 w-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+					<title>Mobile menu</title>
+					<path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+				</svg>
+			</button>
+		</div>
+		<ul class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex gap-2 lg:items-center lg:w-auto lg:space-x-6">
+			<li><a class="text-sm text-black-600 font-bold hover:text-gray-500" href="./index.html">Home</a></li>
+			<li><a class="text-sm text-black-600 font-bold hover:text-gray-500" href="./pages/about2.html">About Us</a></li>
+			<li><a class="text-sm text-black-600 font-bold hover:text-gray-500" href="./pages/service.html">Services</a></li>
+			<li><a class="text-sm text-black-600 font-bold hover:text-gray-500" href="./pages/contact.html">Contact</a></li>
+		</ul>
+		<a class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="./pages/login.html">Sign In</a>
+		<a class="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="./pages/signUp.html">Sign up</a>
+	</nav>
+	<div class="navbar-menu relative z-50 hidden">
+		<div class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
+		<nav class="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
+			<div class="flex items-center mb-8">
+				<a class="mr-auto text-3xl font-bold leading-none" href="#">
+					Trackify
+				</a>
+				<button class="navbar-close">
+					<svg class="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+					</svg>
+				</button>
+			</div>
+			<div>
+				<ul>
+					<li class="mb-1">
+						<a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded" href="./index.html">Home</a>
+					</li>
+					<li class="mb-1">
+						<a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded" href="./pages/about2.html">About Us</a>
+					</li>
+					<li class="mb-1">
+						<a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded" href="./pages/service.html">Services</a>
+					</li>
+					<li class="mb-1">
+						<a  class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded" href="./pages/contact.html">Contact</a>
+					</li>
+				</ul>
+			</div>
+			<div class="mt-auto">
+				<div class="pt-6">
+					<a class="block px-4 py-3 mb-3 leading-loose text-xs text-center font-semibold leading-none bg-gray-50 hover:bg-gray-100 rounded-xl" href="./pages/login.html">Sign in</a>
+					<a class="block px-4 py-3 mb-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700  rounded-xl" href="./pages/signUp.html">Sign Up</a>
+				</div>
+				<p class="my-4 text-xs text-center text-gray-400">
+					<span>Copyright © 2025</span>
+				</p>
+			</div>
+		</nav>
+	</div>
+  
+
+<!-- component -->
+
+<section class="dark:bg-gray-100 dark:text-gray-800">
+	<div class="container flex flex-col justify-center p-6 mx-auto sm:py-12 lg:py-24 lg:flex-row lg:justify-between">
+		<div class="flex flex-col justify-center p-6 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left">
+			<h1 class="text-5xl text-center xxl:text-left xl:text-left sm:text-center md:text-left  font-bold leading-none sm:text-6xl">Manage your Expenses with
+				<span class="dark:text-violet-600">Trackify</span>
+			</h1>
+			<p class="mt-6 mb-8 text-lg sm:mb-12">Trackify gives you the tools 
+				<br class="hidden md:inline lg:hidden"> and insights to make smarter financial decisions every day.
+			</p>
+			<div class="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
+				<a rel="noopener noreferrer" href="./pages/signUp.html" class="px-8 py-3 text-lg font-semibold rounded dark:bg-violet-600 dark:text-gray-50">Get Started</a>
+				<a rel="noopener noreferrer" href="./pages/about.html" class="px-8 py-3 text-lg font-semibold border rounded dark:border-gray-800">Learn More</a>
+			</div>
+		</div>
+		<div class="flex items-center justify-center p-6 mt-8 lg:mt-0 h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128">
+			<img src="./images/hero-image.svg" alt="" class="object-contain h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128">
+		</div>
+	</div>
+</section>
+
+<section class="relative bg-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div class="text-center">
+            <div class="relative">
+                <div class="absolute -top-24 -left-24 w-48 h-48 bg-primary-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
+                <div class="absolute -bottom-8 -right-8 w-48 h-48 bg-accent-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float animation-delay-2000"></div>
+                <div class="absolute top-0 right-20 w-48 h-48 bg-secondary-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float animation-delay-4000"></div>
+            </div>
+            <h1 class="text-4xl font-extrabold tracking-tight text-dark-900 sm:text-5xl lg:text-6xl">
+                Take control of your finances
+            </h1>
+            <p class="mt-6 text-xl text-gray-600 max-w-3xl mx-auto">
+                Trackify gives you the tools and insights to make smarter financial decisions every day.
+            </p>
+            <div class="mt-10 flex justify-center gap-4">
+                <a href="/register" class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 md:py-4 md:text-lg md:px-10 transition duration-150">
+                    Get started
+                </a>
+                <a href="/features" class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary-700 bg-primary-100 hover:bg-primary-200 md:py-4 md:text-lg md:px-10 transition duration-150">
+                    Learn more
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-12 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:text-center">
+            <h2 class="text-base text-primary-600 font-semibold tracking-wide uppercase">By the numbers</h2>
+            <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-dark-900 sm:text-4xl">
+                Our impact in the financial world
+            </p>
+        </div>
+
+        <div class="mt-10">
+            <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+                <div class="bg-white p-6 rounded-lg shadow-md text-center transition duration-300 hover:shadow-lg">
+                    <div class="flex items-center justify-center w-16 h-16 rounded-full bg-primary-100 text-primary-600 mx-auto">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="mt-4 text-3xl font-bold text-dark-900">500K+</h3>
+                    <p class="mt-2 text-gray-600">Active Users</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center transition duration-300 hover:shadow-lg">
+                    <div class="flex items-center justify-center w-16 h-16 rounded-full bg-secondary-100 text-secondary-600 mx-auto">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="mt-4 text-3xl font-bold text-dark-900">$150M+</h3>
+                    <p class="mt-2 text-gray-600">Saved by users</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center transition duration-300 hover:shadow-lg">
+                    <div class="flex items-center justify-center w-16 h-16 rounded-full bg-accent-100 text-accent-600 mx-auto">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="mt-4 text-3xl font-bold text-dark-900">150+</h3>
+                    <p class="mt-2 text-gray-600">Countries</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center transition duration-300 hover:shadow-lg">
+                    <div class="flex items-center justify-center w-16 h-16 rounded-full bg-primary-100 text-primary-600 mx-auto">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h3 class="mt-4 text-3xl font-bold text-dark-900">99.9%</h3>
+                    <p class="mt-2 text-gray-600">Uptime</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="mb-16">
+  <dh-component>
+      <div class="container flex justify-center mx-auto pt-16">
+          <div>
+              <p class="text-gray-500 text-lg text-center font-normal pb-3">BUILDING TEAM</p>
+              <h1 class="xl:text-4xl text-3xl text-center text-gray-800 font-extrabold pb-6 sm:w-4/6 w-5/6 mx-auto">The Talented People Behind the Scenes of the App</h1>
+          </div>
+      </div>
+      <div class="w-full bg-gray-100 px-10 pt-10">
+          <div class="container mx-auto">
+              <div role="list" aria-label="Behind the scenes People " class="lg:flex md:flex sm:flex items-center xl:justify-between flex-wrap md:justify-around sm:justify-around lg:justify-around">
+                  <div role="listitem" class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5">
+                      <div class="rounded overflow-hidden shadow-md bg-white">
+                          <div class="absolute -mt-20 w-full flex justify-center">
+                              <div class="h-32 w-32">
+                                  <img src="./images/abdullah.jpg" alt="Display Picture of Andres Berlin" role="img" class="rounded-full object-cover h-full w-full shadow-md" />
+                              </div>
+                          </div>
+                          <div class="px-6 mt-16">
+                              <h1 class="font-bold text-3xl text-center mb-1">Abdullah Sheriff</h1>
+                              <p class="text-gray-800 text-sm text-center">Chief Executive Officer</p>
+                              <p class="text-center text-gray-600 text-base pt-3 font-normal">The CEO's role in raising a company's corporate IQ is to establish an atmosphere that promotes knowledge sharing and collaboration.</p>
+                              <div class="w-full flex justify-center pt-5 pb-5">
+                                  <a href="https://github.com/Abdullah12-tech" class="mx-5">
+                                      <div aria-label="Github" role="img">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#718096" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github">
+                                              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                          </svg>
+                                      </div>
+                                  </a>
+                                  <a href="#" class="mx-5">
+                                      <div aria-label="Twitter" role="img">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#718096" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter">
+                                              <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                                          </svg>
+                                      </div>
+                                  </a>
+                                  <a href="#" class="mx-5">
+                                      <div aria-label="Instagram" role="img">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#718096" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram">
+                                              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                          </svg>
+                                      </div>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div role="listitem" class="xl:w-1/3 lg:mx-3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5">
+                      <div class="rounded overflow-hidden shadow-md bg-white">
+                          <div class="absolute -mt-20 w-full flex justify-center">
+                              <div class="h-32 w-32">
+                                  <img src="./images/profile1.png" alt="Display Picture of Silene Tokyo" role="img" class="rounded-full object-cover h-full w-full shadow-md" />
+                              </div>
+                          </div>
+                          <div class="px-6 mt-16">
+                              <h1 class="font-bold text-3xl text-center mb-1">Silene Tokyo</h1>
+                              <p class="text-gray-800 text-sm text-center">Product Design Head</p>
+                              <p class="text-center text-gray-600 text-base pt-3 font-normal">The emphasis on innovation and technology in our companies has resulted in a few of them establishing global benchmarks in product design and development.</p>
+                              <div class="w-full flex justify-center pt-5 pb-5">
+                                  <a href="javascript:void(0)" class="mx-5">
+                                      <div aria-label="Github" role="img">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#718096" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github">
+                                              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                          </svg>
+                                      </div>
+                                  </a>
+                                  <a href="javascript:void(0)" class="mx-5">
+                                      <div aria-label="Twitter" role="img">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#718096" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter">
+                                              <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                                          </svg>
+                                      </div>
+                                  </a>
+                                  <a href="javascript:void(0)" class="mx-5">
+                                      <div aria-label="Instagram" role="img">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#718096" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram">
+                                              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                          </svg>
+                                      </div>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div role="listitem" class="xl:w-1/3 sm:w-3/4 md:w-2/5 relative mt-16 mb-32 sm:mb-24 xl:max-w-sm lg:w-2/5">
+                      <div class="rounded overflow-hidden shadow-md bg-white">
+                          <div class="absolute -mt-20 w-full flex justify-center">
+                              <div class="h-32 w-32">
+                                  <img src="./images/profile2.jpeg" alt="Display Picture of Charles Keith" role="img" class="rounded-full object-cover h-full w-full shadow-md" />
+                              </div>
+                          </div>
+                          <div class="px-6 mt-16">
+                              <h1 class="font-bold text-3xl text-center mb-1">Charles Keith</h1>
+                              <p class="text-gray-800 text-sm text-center">UX Designer</p>
+                              <p class="text-center text-gray-600 text-base pt-3 font-normal">A UX designer is the voice of the customer. Our job is to look beyond the business goals. We don't just experience user interface but also questions it.</p>
+                              <div class="w-full flex justify-center pt-5 pb-5">
+                                  <a href="javascript:void(0)" class="mx-5">
+                                      <div aria-label="Github" role="img">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#718096" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github">
+                                              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                          </svg>
+                                      </div>
+                                  </a>
+                                  <a href="javascript:void(0)" class="mx-5">
+                                      <div aria-label="Twitter" role="img">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#718096" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter">
+                                              <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                                          </svg>
+                                      </div>
+                                  </a>
+                                  <a href="" class="mx-5">
+                                      <div aria-label="Instagram" role="img">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#718096" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram">
+                                              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                          </svg>
+                                      </div>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </dh-component>
+</div>
+
+
+
+
+
+
+
+<div class="min-w-screen min-h-screen bg-gray-50 flex items-center justify-center py-5">
+  <div class="w-full bg-white border-t border-b border-gray-200 px-5 py-16 md:py-24 text-gray-800">
+      <div class="w-full max-w-6xl mx-auto">
+          <div class="text-center md:tex max-w-xl mx-auto">
+              <h1 class="text-6xl md:text-7xl md:text-center lg:text-center font-bold mb-5 text-gray-600">What people <br>are saying.</h1>
+              <h3 class="text-xl mb-5 font-light">Real experiences from users who have transformed their financial habits with Trackify.</h3>
+              <div class="text-center mb-10">
+                  <span class="inline-block w-1 h-1 rounded-full bg-indigo-500 ml-1"></span>
+                  <span class="inline-block w-3 h-1 rounded-full bg-indigo-500 ml-1"></span>
+                  <span class="inline-block w-40 h-1 rounded-full bg-indigo-500"></span>
+                  <span class="inline-block w-3 h-1 rounded-full bg-indigo-500 ml-1"></span>
+                  <span class="inline-block w-1 h-1 rounded-full bg-indigo-500 ml-1"></span>
+              </div>
+          </div>
+          <div class="-mx-3 md:flex items-start">
+              <div class="px-3 md:w-1/3">
+                  <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
+                      <div class="w-full flex mb-4 items-center">
+                          <div class="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
+                              <img src="https://i.pravatar.cc/100?img=1" alt="">
+                          </div>
+                          <div class="flex-grow pl-3">
+                              <h6 class="font-bold text-sm uppercase text-gray-600">Kenzie Edgar.</h6>
+                          </div>
+                      </div>
+                      <div class="w-full">
+                          <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span>Whether you're a student, freelancer, or business owner, <b>Trackify</b> is a must-have! It simplifies money management and helps you achieve financial freedom. I tell all my friends about it!<span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+                      </div>
+                  </div>
+                  <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
+                      <div class="w-full flex mb-4 items-center">
+                          <div class="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
+                              <img src="https://i.pravatar.cc/100?img=2" alt="">
+                          </div>
+                          <div class="flex-grow pl-3">
+                              <h6 class="font-bold text-sm uppercase text-gray-600">Stevie Tifft.</h6>
+                          </div>
+                      </div>
+                      <div class="w-full">
+                          <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span>I was concerned about security, but <b>Trackify</b> ensures my financial data is encrypted and private. I feel confident tracking my expenses without worrying about security risks. It's the best financial tool I've used!<span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+                      </div>
+                  </div>
+              </div>
+              <div class="px-3 md:w-1/3">
+                  <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
+                      <div class="w-full flex mb-4 items-center">
+                          <div class="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
+                              <img src="./images/profile4.jpeg" alt="">
+                          </div>
+                          <div class="flex-grow pl-3">
+                              <h6 class="font-bold text-sm uppercase text-gray-600">Tommie Ewart.</h6>
+                          </div>
+                      </div>
+                      <div class="w-full">
+                          <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span>I've tried multiple expense trackers before, but <b>Trackify</b> stands out. The ability to categorize transactions and generate spending reports is exactly what I needed. My savings have increased since using this tool!<span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+                      </div>
+                  </div>
+                  <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
+                      <div class="w-full flex mb-4 items-center">
+                          <div class="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
+                              <img src="https://i.pravatar.cc/100?img=4" alt="">
+                          </div>
+                          <div class="flex-grow pl-3">
+                              <h6 class="font-bold text-sm uppercase text-gray-600">Charlie Howse.</h6>
+                          </div>
+                      </div>
+                      <div class="w-full">
+                          <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span>I love how simple and intuitive <b>Trackify</b> is. Adding expenses and income takes just a few seconds, and the user-friendly design makes budgeting effortless. Best of all, it works seamlessly on my phone and laptop<span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+                      </div>
+                  </div>
+              </div>
+              <div class="px-3 md:w-1/3">
+                  <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
+                      <div class="w-full flex mb-4 items-center">
+                          <div class="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
+                              <img src="https://i.pravatar.cc/100?img=5" alt="">
+                          </div>
+                          <div class="flex-grow pl-3">
+                              <h6 class="font-bold text-sm uppercase text-gray-600">Nevada Herbertson.</h6>
+                          </div>
+                      </div>
+                      <div class="w-full">
+                          <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span><b>Trackify</b> has completely transformed how I manage my money! I used to struggle with tracking my expenses, but now I have a clear view of my spending habits. The reports and insights help me make smarter financial decisions. Highly recommended!"<span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+                      </div>
+                  </div>
+                  <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 p-5 text-gray-800 font-light mb-6">
+                      <div class="w-full flex mb-4 items-center">
+                          <div class="overflow-hidden rounded-full w-10 h-10 bg-gray-50 border border-gray-200">
+                              <img src="./images/profile3.jpg" alt="">
+                          </div>
+                          <div class="flex-grow pl-3">
+                              <h6 class="font-bold text-sm uppercase text-gray-600">Kris Stanton.</h6>
+                          </div>
+                      </div>
+                      <div class="w-full">
+                          <p class="text-sm leading-tight"><span class="text-lg leading-none italic font-bold text-gray-400 mr-1">"</span>I have try more than two expense tracker website and I realize that <b>Trackify</b> is the best expense tracker you need for all your Income and Expenses tracking<span class="text-lg leading-none italic font-bold text-gray-400 ml-1">"</span></p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- component -->
+
+<article id="the-article">
+
+  <div>
+      <div class="mx-auto max-w-6xl">
+          <div class="p-2 rounded">
+              <div class="flex flex-col md:flex-row">
+                  <div class="md:w-1/3 p-4 text-sm">
+  
+              <div class="sticky inset-x-0 top-0 left-0 py-12">
+                  
+                      <div class="text-3xl text-green-400 mb-8">Frequently asked questions.</div>
+                    
+  
+                      <!-- <div class="relative text-gray-600 mt-8 lg:mr-16">
+                          <input 
+                          x-ref="searchField"
+                          x-model="search"
+                          x-on:keydown.window.prevent.slash="$refs.searchField.focus()"
+                          type="search" name="serch" placeholder="Search" class="bg-white w-full h-10 px-5 rounded-full text-sm focus:outline-none">
+                          <button type="submit" class="focus:outline-none absolute right-0 top-0 mt-3 mr-4">
+                            <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve" width="512px" height="512px">
+                              <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z"/>
+                            </svg>
+                          </button>
+                        </div> -->
+  
+                      </div>
+                  </div>
+                  <div class="md:w-2/3 py-12 ">
+                      <div class="p-4">
+  
+              <div  style="transition: .5s;" class="item px-6 py-6" x-data="{isOpen : false}">
+                  <a href="#" class="flex items-center justify-between" @click.prevent="isOpen = true">
+                      <h4 :class="{'text-green-400 font-medium' : isOpen == true}">What is this expense tracker ?</h4>
+                      <svg 
+                      :class="{'transform rotate-180' : isOpen == true}"
+                      class="w-5 h-5 text-gray-500"
+                          fill="none" stroke-linecap="round" 
+                          stroke-linejoin="round" stroke-width="2" 
+                          viewBox="0 0 24 24" stroke="currentColor">
+                          <path d="M19 9l-7 7-7-7"></path>
+                      </svg>
+                  </a>
+                  <div x-show="isOpen" @click.away="isOpen = false" class="mt-3" :class="{'text-gray-600' : isOpen == true}">
+                      <p>This expense tracker is a simple and efficient tool designed to help you manage your income and expenses, track spending habits, and stay on top of your financial goals.</p>
+                  </div>
+                </div>
+              
+              <div style="transition: .5s;" class="item px-6 py-6" x-data="{isOpen : false}">
+                  <a href="#" class="flex items-center justify-between" @click.prevent="isOpen = true">
+                      <h4 :class="{'text-green-400 font-medium' : isOpen == true}">How do I add an expense?</h4>
+                      <svg 
+                      :class="{'transform rotate-180' : isOpen == true}"
+                      class="w-5 h-5 text-gray-500"
+                          fill="none" stroke-linecap="round" 
+                          stroke-linejoin="round" stroke-width="2" 
+                          viewBox="0 0 24 24" stroke="currentColor">
+                          <path d="M19 9l-7 7-7-7"></path>
+                      </svg>
+                  </a>
+                  <div x-show="isOpen" @click.away="isOpen = false" class="mt-3" :class="{'text-gray-600' : isOpen == true}">
+                      <p>To add an expense, simply log in to your account, navigate to the "Add Expense" section, enter the amount, category, and description, and click "Save."</p>
+                  </div>
+              </div>
+              
+              <div class="item px-6 py-6" x-data="{isOpen : false}">
+                  <a href="#" class="flex items-center justify-between" @click.prevent="isOpen = true">
+                      <h4 :class="{'text-green-400 font-medium' : isOpen == true}">Can I track my income as well?</h4>
+                      <svg 
+                      :class="{'transform rotate-180' : isOpen == true}"
+                      class="w-5 h-5 text-gray-500"
+                          fill="none" stroke-linecap="round" 
+                          stroke-linejoin="round" stroke-width="2" 
+                          viewBox="0 0 24 24" stroke="currentColor">
+                          <path d="M19 9l-7 7-7-7"></path>
+                      </svg>
+                  </a>
+                  <div x-show="isOpen" @click.away="isOpen = false" class="mt-3" :class="{'text-gray-600' : isOpen == true}">
+                      <p>Yes! Our tracker allows you to log both income and expenses, helping you maintain a clear overview of your financial status.</p>
+                  </div>
+              </div>
+              
+              <div class="item px-6 py-6" x-data="{isOpen : false}">
+                <a href="#" class="flex items-center justify-between" @click.prevent="isOpen = !isOpen">
+                  <h4 :class="{'text-green-400 font-medium': isOpen}" class="mr-2">Is my financial data secure?</h4>
+                  <svg 
+                      :class="{'transform rotate-180': isOpen}" 
+                      class="w-5 h-5 text-gray-500 transition-transform duration-200"
+                      fill="none" stroke-linecap="round" 
+                      stroke-linejoin="round" stroke-width="2" 
+                      viewBox="0 0 24 24" stroke="currentColor">
+                      <path d="M19 9l-7 7-7-7"></path>
+                  </svg>
+              </a>
+              
+                  <div x-show="isOpen" @click.away="isOpen = false" class="mt-3" :class="{'text-gray-600' : isOpen == true}">
+                      <p>Absolutely. We use encryption and security measures to ensure your financial data remains private and protected.</p>
+                  </div>
+              </div>
+              
+              <div class="item px-6 py-6" x-data="{isOpen : false}">
+                  <a href="#" class="flex items-center justify-between" @click.prevent="isOpen = true">
+                      <h4 :class="{'text-green-400 font-medium' : isOpen == true}">Can I edit or delete an expense after adding it?</h4>
+                      <svg 
+                      :class="{'transform rotate-180' : isOpen == true}"
+                      class="w-5 h-5 text-gray-500"
+                          fill="none" stroke-linecap="round" 
+                          stroke-linejoin="round" stroke-width="2" 
+                          viewBox="0 0 24 24" stroke="currentColor">
+                          <path d="M19 9l-7 7-7-7"></path>
+                      </svg>
+                  </a>
+                  <div x-show="isOpen" @click.away="isOpen = false" class="mt-3" :class="{'text-gray-600' : isOpen == true}">
+                      <p>Yes, you can edit or delete any expense from your records at any time through the dashboard.</p>
+                  </div>
+              </div>
+          </div>
+  
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  </article>
+  
+  <div
+    x-data="scrollHandler(document.getElementById('the-article'))"
+    x-cloak
+    aria-hidden="true"
+    @scroll.window="calculateHeight(window.scrollY)"
+    class="fixed h-screen w-1 hover:bg-gray-200 top-0 left-0 bg-gray-300">
+    <div :style="`max-height:${height}%`" class="h-full bg-green-400"></div>
+  </div>
+  
+  <div
+    id="alpine-devtools"
+    x-data="devtools()"
+    x-show="alpines.length"
+    x-init="start()">
+  </div>
+
+
+
+
+<footer class="relative bg-blueGray-200 pt-8 pb-6">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-wrap text-left lg:text-left">
+      <div class="w-full lg:w-6/12 px-4">
+        <h4 class="text-3xl fonat-semibold text-blueGray-700">Let's keep in touch!</h4>
+        <h5 class="text-lg mt-0 mb-2 text-blueGray-600">
+          Find us on any of these platforms, we respond 1-2 business days.
+        </h5>
+        <div class="mt-6 lg:mb-0 mb-6">
+          <button class="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center rounded-full outline-none focus:outline-none mr-2" type="button">
+            <a href="https://dribbble.com/Abdullahtheplug"><i class="fab fa-dribbble"></i></a></button><button class="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
+            <a href="https://web.facebook.com/Abdullahtheplug"><i class="fab fa-facebook-square"></i></a></button><button class="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
+            <a href="https://www.instagram.com/abdullahakinkunmi26/"><i class="fab fa-instagram"></i></a></button><button class="bg-white text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
+            <a href="https://github.com/Abdullah12-tech"><i class="fab fa-github"></i></a>
+          </button>
+        </div>
+      </div>
+      <div class="w-full lg:w-6/12 px-4">
+        <div class="flex flex-wrap items-top mb-6">
+          <div class="w-full lg:w-4/12 px-4 ml-auto">
+            <span class="block uppercase text-blueGray-500 text-sm font-semibold mb-2">Useful Links</span>
+            <ul class="list-unstyled">
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block mb-2 text-sm" href="">About Us</a>
+              </li>
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block mb-2 text-sm" href="">Blog</a>
+              </li>
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block mb-2 text-sm" href="">Github</a>
+              </li>
+            </ul>
+          </div>
+          <div class="w-full lg:w-4/12 px-4">
+            <span class="block uppercase text-blueGray-500 text-sm font-semibold mb-2">Other Resources</span>
+            <ul class="list-unstyled">
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block mb-2 text-sm" href="">Terms &amp; Conditions</a>
+              </li>
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block mb-2 text-sm" href="">Privacy Policy</a>
+              </li>
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block mb-2 text-sm" href="">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="my-6 border-blueGray-300">
+    <div class="flex flex-wrap items-center md:justify-between justify-center">
+      <div class="w-full md:w-4/12 px-4 mx-auto text-center">
+        <div class="text-sm text-blueGray-500 font-semibold py-1">
+          Copyright © <span id="get-current-year">2025</span><a href="" class="text-blueGray-500 hover:text-gray-800"> Trackify by
+          <a href="" class="text-blueGray-500 hover:text-blueGray-800">Abdullahtheplug</a>.
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+<script type="module" src="./javascript/index.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+</html>

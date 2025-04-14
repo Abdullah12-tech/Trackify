@@ -1,0 +1,489 @@
+<!-- component -->
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+        <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+        <script>
+          tailwind.config = {
+            darkMode: 'class',
+          }
+        </script>
+
+        <title>Report</title>
+    <!-- Favicon -->
+     <link rel="shortcut icon" href="../images/trackify.png" type="image/x-icon">
+     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
+</head>
+
+<body class="bg-black dark:bg-gray-900 dark:text-black-100 transition-colors duration-250">
+    <div id="toBeload" class=" flex items-center justify-center z-40 min-h-screen p-5 bg-gray-100 min-w-screen">
+
+        <div class="flex space-x-2 animate-pulse">
+            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+        </div>
+    
+    </div>
+    <div x-data="data()" id="loadedContent" class="hidden flex h-screen bg-gray-800 " :class="{ 'overflow-hidden': isSideMenuOpen }">
+
+        <!-- Desktop sidebar -->
+        <aside class="z-20 flex-shrink-0 hidden w-60 pl-2 overflow-y-auto bg-gray-100 dark:bg-gray-900 md:block">
+            <div>
+                <div class="text-black dark:text-white">
+                    <div class="flex p-2 bg-gray-100 dark:bg-gray-900">
+                        <div class="flex py-3 px-2 gap-2 items-center">
+                            <p class="text-2xl text-green-500 font-semibold flex items-center gap-2"> Trackify <p class=" font-semibold italic">DashBoard</p></p>  
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="">
+                            <img id="profileImg" class="hidden h-24 w-24 rounded-full sm:block object-cover mr-2 border-4 border-green-400"
+                                 alt="">
+                            <p id="username" class="font-bold text-base  text-gray-400 pt-2 text-center w-24"></p>
+                        </div>
+                    </div>
+                    <div>
+                        <ul class="mt-6 leading-10">
+                            <li class="relative px-2 py-1 ">
+                                <a class="inline-flex items-center w-full text-sm font-semibold text-black dark:text-white transition-colors duration-500 cursor-pointer hover:text-green-500" 
+                                    href="../pages/dashboard.html">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                    </svg>
+                                    <span class="ml-4">DASHBOARD</span>
+                                </a>
+                            </li>
+                            <li class="relative px-2 py-1 ">
+                                <a class="inline-flex items-center w-full text-sm font-semibold text-black dark:text-white transition-colors duration-500 cursor-pointer hover:text-green-500" 
+                                    href="../pages/budget.html">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"></path></svg>
+                                    <span class="ml-4">BUDGET</span>
+                                </a>
+                            </li>
+                            <li class="relative px-2 py-1 ">
+                                <a class="inline-flex items-center w-full text-sm font-semibold text-black dark:text-white transition-colors duration-500 cursor-pointer hover:text-green-500" 
+                                    href="../pages/goal.html">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                                    <span class="ml-4">GOALS</span>
+                                </a>
+                            </li>
+                            <li class="relative px-2 py-1 ">
+                                <a class="inline-flex items-center w-full text-sm font-semibold text-black dark:text-white transition-colors duration-500 cursor-pointer hover:text-green-500" 
+                                    href="../pages/report.html">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                    <span class="ml-4">REPORT</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Mobile sidebar -->
+        <!-- Backdrop -->
+        <div x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-500"
+            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="fixed inset-0 z-10 flex items-end bg-white dark:black bg-opacity-50 sm:items-center sm:justify-center"></div>
+
+        <aside
+            class="fixed inset-y-0 z-20 flex-shrink-0 w-64 mt-16 overflow-y-auto  bg-gray-100 dark:bg-gray-900 md:hidden"
+            x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
+            x-transition:enter-start="opacity-0 transform -translate-x-20" x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0 transform -translate-x-20" @click.away="closeSideMenu"
+            @keydown.escape="closeSideMenu">
+            <div>
+                <div class="text-black dark:text-white">
+                    <div class="flex p-2 bg-gray-100 dark:bg-gray-900">
+                        <div class="flex py-3 px-2 items-center">
+                            <p class="text-2xl text-green-500 font-semibold">Trackify</p> <p class="ml-2 text-white font-semibold italic">
+                            DASHBOARD</p>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="">
+                            <img id="profileImg2" class=" h-24 w-24 rounded-full sm:block object-cover mr-2 border-4 border-green-400"
+                                 alt="">
+                            <p id="username2" class="font-bold text-base text-gray-600 dark:text-gray-400 pt-2 text-center w-24"></p>
+                        </div>
+                    </div>
+                    <div> 
+                      <ul class="mt-6 leading-10">
+                        <li class="relative px-2 py-1 ">
+                            <a class="inline-flex items-center text-black dark:text-white w-full text-sm font-semibold  transition-colors duration-500 cursor-pointer hover:text-green-500"
+                                href="../pages/dashboard.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                </svg>
+                                <span class="ml-4">DASHBOARD</span>
+                            </a>
+                        </li>
+                        <li class="relative px-2 py-1 ">
+                            <a class="inline-flex items-center text-black dark:text-white w-full text-sm font-semibold  transition-colors duration-150 cursor-pointer hover:text-green-500" 
+                                href="../pages/budget.html">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"></path></svg>
+                                <span class="ml-4">BUDGET</span>
+                            </a>
+                        </li>
+                        <li class="relative px-2 py-1 ">
+                            <a class="inline-flex items-center text-black dark:text-white w-full text-sm font-semibold  transition-colors duration-150 cursor-pointer hover:text-green-500" 
+                                href="../pages/goal.html">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                                <span class="ml-4">GOALS</span>
+                            </a>
+                        </li>
+                        <li class="relative px-2 py-1 ">
+                            <a class="inline-flex items-center text-black dark:text-white w-full text-sm font-semibold  transition-colors duration-150 cursor-pointer hover:text-green-500" 
+                                href="../pages/report.html">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                <span class="ml-4">REPORT</span>
+                            </a>
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="flex flex-col flex-1 w-full overflow-y-auto">
+            <header class="z-10 py-4 bg-gray-100 dark:bg-gray-900  ">
+                <div class="flex items-center justify-between h-8 px-6 mx-auto">
+                    <!-- Mobile hamburger -->
+                    <button class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
+                        @click="toggleSideMenu" aria-label="Menu">
+                        <x-heroicon-o-menu class="w-6 h-6 stroke-black dark:stroke-white fill-none" />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white stroke-black " fill="currentColor"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h7" />
+                        </svg>
+                    </button>
+
+                    <!-- Search Input -->
+                    <div class="flex justify-center  mt-2 mr-4">
+                        <div class="relative flex w-full flex-wrap items-stretch mb-3">
+                            <input type="search" placeholder="Search" {{ $attributes }}
+                                class="form-input px-3 py-2 placeholder-gray-400 text-gray-700 relative bg-white rounded-lg text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pr-10" />
+                            <span
+                                class="z-10 h-full leading-snug font-normal  text-center text-gray-400 absolute bg-transparent rounded text-base items-center justify-center w-8 right-0 pr-3 py-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 -mt-1" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <ul class="flex items-center flex-shrink-0 space-x-6">
+
+                        <li>
+                            <button
+                              id="theme-toggle"
+                              class="group p-2 transition-all duration-200 rounded-full shadow-md bg-white  text-gray-900 focus:outline-none"
+                            >
+                              <!-- Sun icon (shown in dark mode) -->
+                              
+                            </button>
+                        </li>
+
+                        <!-- Profile menu -->
+                        <li class="relative">
+                            <button
+                                class="p-2 bg-white text-green-400 align-middle rounded-full hover:text-white hover:bg-green-400 focus:outline-none "
+                                @click="toggleProfileMenu" @keydown.escape="closeProfileMenu" aria-label="Account"
+                                aria-haspopup="true">
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </div>
+                            </button>
+                            <template x-if="isProfileMenuOpen">
+                                <ul x-transition:leave="transition ease-in duration-150"
+                                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                                    @click.away="closeProfileMenu" @keydown.escape="closeProfileMenu"
+                                    class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-green-400 border border-green-500 rounded-md shadow-md"
+                                    aria-label="submenu">
+                                    <li class="flex">
+                                        <a class=" text-white inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800"
+                                            href="../pages/editprofile.html">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            <span>Profile</span>
+                                        </a>
+                                    </li>
+                                    <li class="flex">
+                                        <a id="logOutBtn" class="text-white inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800"
+                                            href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                            </svg>
+                                            <span>Log out</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </template>
+                        </li>
+                    </ul>
+
+                </div>
+            </header>
+            <main class="bg-gray-100 dark:bg-gray-900">
+                <div  class="bg-gray-100 dark:bg-gray-900 grid mb-4 pb-10 px-8 mx-4 rounded-3xl transition-all duration-300 border-4 ">
+
+                    <div class="grid grid-cols-12 gap-6">
+                        <div class="grid grid-cols-12 col-span-12 gap-6 xxl:col-span-9">
+                            <div class="col-span-12 mt-8">
+                                  
+                                <!-- Goals Page Container -->
+                                <!-- Reports Page Container -->
+                            <div class="container mx-auto px-4 py-8 max-w-6xl">
+                                <!-- Header with Date Range Picker -->
+                                <!-- <div class="flex flex-col flex-shrink-2 md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                                  <h1 class="text-2xl font-bold text-black dark:text-white">Financial Reports</h1>
+                                  <div class="flex items-center space-x-2">
+                                    <select id="reportType" class="px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                      <option value="expense">Expense Report</option>
+                                      <option value="income">Income Report</option>
+                                      <option value="budget">Budget vs. Actual</option>
+                                    </select>
+                                    <input 
+                                      type="date" 
+                                      id="startDate" 
+                                      class="px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                    >
+                                    <span class="text-gray-500">to</span>
+                                    <input 
+                                      type="date" 
+                                      id="endDate" 
+                                      class="px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                    >
+                                    <button id="generateReportBtn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+                                      Generate
+                                    </button>
+                                  </div>
+                                </div> -->
+                                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                                  <!-- Title -->
+                                  <h1 class="text-2xl font-bold text-black dark:text-white">
+                                    Financial Reports
+                                  </h1>
+                                
+                                  <!-- Filter Controls -->
+                                  <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 w-full md:w-auto">
+                                    <!-- Report Type Dropdown -->
+                                    <select id="reportType"
+                                      class="px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 w-full sm:w-auto">
+                                      <option value="expense">Expense Report</option>
+                                      <option value="income">Income Report</option>
+                                      <option value="budget">Budget vs. Actual</option>
+                                    </select>
+                                
+                                    <!-- Start Date -->
+                                    <input type="date" id="startDate"
+                                      class="px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 w-full sm:w-auto" />
+                                
+                                    <!-- Separator -->
+                                    <span class="text-gray-500 text-center sm:text-left">to</span>
+                                
+                                    <!-- End Date -->
+                                    <input type="date" id="endDate"
+                                      class="px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 w-full sm:w-auto" />
+                                
+                                    <!-- Button -->
+                                    <button id="generateReportBtn"
+                                      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md w-full sm:w-auto">
+                                      Generate
+                                    </button>
+                                  </div>
+                                </div>
+                                
+                                <!-- Key Metrics Cards -->
+                                <!-- <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                                  <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                                    <h3 class="text-gray-500 text-sm font-medium">Total Spending</h3>
+                                    <p id="spendingTotal" class="text-2xl font-bold text-gray-800">$2,340</p>
+                                    <p class="text-red-600 text-sm">↑ 12% vs last period</p>
+                                  </div>
+                                  <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                                    <h3 class="text-gray-500 text-sm font-medium">Top Category</h3>
+                                    <p id="topCategory" class="text-2xl font-bold text-gray-800">Food</p>
+                                    <p id="topCategoryAmount" class="text-gray-600 text-sm">$780 (33%)</p>
+                                  </div>
+                                  <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                                    <h3 class="text-gray-500 text-sm font-medium">Avg. Daily Spend</h3>
+                                    <p id="spendDaily" class="text-2xl font-bold text-gray-800">$78</p>
+                                    <p class="text-green-600 text-sm">↓ 5% vs last period</p>
+                                  </div>
+                                  <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                                    <h3 class="text-gray-500 text-sm font-medium">Budget Adherence</h3>
+                                    <p id="budgetAdherence" class="text-2xl font-bold text-gray-800">82%</p>
+                                    <p id="budgetNote" class="text-yellow-600 text-sm">3 categories over</p>
+                                  </div>
+                                </div> -->
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                                  <!-- Total Spending -->
+                                  <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                                    <h3 class="text-gray-500 text-sm font-medium">Total Spending</h3>
+                                    <p id="spendingTotal" class="text-2xl font-bold text-gray-800">$2,340</p>
+                                    <p class="text-red-600 text-sm">↑ 12% vs last period</p>
+                                  </div>
+                                
+                                  <!-- Largest Category -->
+                                  <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                                    <h3 class="text-gray-500 text-sm font-medium">Top Category</h3>
+                                    <p id="topCategory" class="text-2xl font-bold text-gray-800">Food</p>
+                                    <p id="topCategoryAmount" class="text-gray-600 text-sm">$780 (33%)</p>
+                                  </div>
+                                
+                                  <!-- Avg. Daily Spend -->
+                                  <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                                    <h3 class="text-gray-500 text-sm font-medium">Avg. Daily Spend</h3>
+                                    <p id="spendDaily" class="text-2xl font-bold text-gray-800">$78</p>
+                                    <p class="text-green-600 text-sm">↓ 5% vs last period</p>
+                                  </div>
+                                
+                                  <!-- Budget Adherence -->
+                                  <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                                    <h3 class="text-gray-500 text-sm font-medium">Budget Adherence</h3>
+                                    <p id="budgetAdherence" class="text-2xl font-bold text-gray-800">82%</p>
+                                    <p id="budgetNote" class="text-yellow-600 text-sm">3 categories over</p>
+                                  </div>
+                                </div>
+                                
+                                <!-- Charts Section -->
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                                    <!-- Expense Breakdown (Pie Chart) -->
+                                    <div class="bg-white p-6 rounded-lg shadow-sm w-full">
+                                      <h2 class="text-lg font-semibold text-gray-800 mb-4">Expense by Category</h2>
+                                      <div class="relative h-64">
+                                        <canvas id="categoryChart"></canvas>
+                                      </div>
+                                    </div>
+                                    
+                                    <!-- Monthly Trend (Line Chart) -->
+                                    <div class="w-full max-w-4xl mx-auto mt-3 p-4 bg-white rounded-lg shadow-md">
+                                        <!-- Filter Controls -->
+                                        <div class="flex justify-center mb-3">
+                                          <h2 class="text-2xl xl:text-2xl text-center sm:text-2xl md:text-2xl font-bold">Select to show your Details Summary</h2>
+                                        </div>
+                                        <div class="flex justify-center mb-6">
+                                          <select id="summaryFilter" class="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                            <option value="daily" selected>Daily Summary</option>
+                                            <option value="weekly">Weekly Summary</option>
+                                            <option value="monthly">Monthly Summary</option>
+                                          </select>
+                                        </div>
+                                      
+                                      
+                                        <!-- Chart Container -->
+                                        <div class="relative h-96 w-full">
+                                          <!-- Loading Spinner -->
+                                          <!-- <div id="chartLoader" class="absolute inset-0 flex items-center justify-center">
+                                            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                                          </div> -->
+                                          
+                                          <!-- Chart Canvas -->
+                                          <canvas id="monthlyChart" class="w-full h-full"></canvas>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="bg-white p-6 rounded-lg shadow-sm w-full">
+                                      <h2 class="text-lg font-semibold text-gray-800 mb-4">Spending Trend</h2>
+                                      <div class="relative h-64">
+                                        <canvas id="monthlyChart"></canvas>
+                                      </div>
+                                    </div> -->
+                                  </div>
+                            
+                                <!-- Detailed Transaction Table -->
+                                <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-8">
+                                  <div class="flex justify-between items-center p-6 pb-0">
+                                    <h2 class="text-lg font-semibold text-gray-800">Transaction Details</h2>
+                                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                      Export as CSV
+                                    </button>
+                                  </div>
+                                  <div class="overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-gray-200">
+                                      <thead class="bg-gray-50">
+                                        <tr>
+                                          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                                          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                                          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
+                                          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
+                                          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Budget Status</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody id="reportTableBody" class="bg-white divide-y divide-gray-200">
+                                        <!-- Example Row -->
+                                        <tr>
+                                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">May 15, 2024</td>
+                                          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">Grocery Store</td>
+                                          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Food</td>
+                                          <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600">-$128.50</td>
+                                          <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Within Budget</span>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                            
+                                <!-- Insights Section -->
+                                <!-- <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+                                  <h2 class="text-lg font-semibold text-gray-800 mb-4">AI-Powered Insights</h2>
+                                  <div class="space-y-4" id="insightsContainer">
+                                    <div class="p-4 bg-blue-50 rounded-lg">
+                                      <p class="text-sm text-gray-800">
+                                        <span class="font-semibold">Spike Alert:</span> Your "Entertainment" spending increased by 45% this month. 
+                                        <a href="#" class="text-blue-600 hover:underline">View transactions</a>
+                                      </p>
+                                    </div>
+                                    <div class="p-4 bg-green-50 rounded-lg">
+                                      <p class="text-sm text-gray-800">
+                                        <span class="font-semibold">Savings Opportunity:</span> You could save ~$90/month by reducing Dining Out frequency.
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div> -->
+                              </div>   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="../javascript/report.js"></script>
+    <script src="../javascript/data.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trackify - Financial Info</title>
+
+  <!-- Firebase SDK CDN -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+    import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+
+    // Firebase config (replace with your actual config)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCnLhDWY1_s81cjcItSYT3H2vZBvxOdSBw",
+      authDomain: "expense-tracker-461b8.firebaseapp.com",
+      projectId: "expense-tracker-461b8",
+      storageBucket: "expense-tracker-461b8.firebasestorage.app",
+      messagingSenderId: "279356757639",
+      appId: "1:279356757639:web:e441f2ca57381fbb870a22"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    // Global variable for the authenticated user
+    let currentUser = null;
+
+    // Listen for authentication state changes (e.g., user login/logout)
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log('User logged in:', user.uid);
+        currentUser = user;
+      } else {
+        console.log('No user logged in');
+        currentUser = null;
+      }
+    });
+
+    // Function to update a specific field in financial info (e.g., increase income or budget)
+    async function updateFinancialField(field, amount) {
+      if (currentUser) {
+        const userRef = doc(db, "Users", currentUser.uid, "financial_info", "current_data");
+
+        try {
+          // Update the specified field (increase or decrease the value)
+          await updateDoc(userRef, {
+            [field]: firebase.firestore.FieldValue.increment(amount)  // Use increment to increase/decrease
+          });
+          console.log(`${field} updated successfully!`);
+        } catch (error) {
+          console.error("Error updating financial info:", error);
+        }
+      } else {
+        console.log("No user is logged in. Cannot update data.");
+      }
+    }
+
+    // Function to load financial info from Firestore
+    async function loadFinancialInfo() {
+      if (currentUser) {
+        const userRef = doc(db, "Users", currentUser.uid, "financial_info", "current_data");
+
+        try {
+          const docSnap = await getDoc(userRef);
+          if (docSnap.exists()) {
+            console.log("Financial Data:", docSnap.data());
+          } else {
+            console.log("No financial data found for this user.");
+          }
+        } catch (error) {
+          console.error("Error getting financial info:", error);
+        }
+      } else {
+        console.log("No user is logged in. Cannot load data.");
+      }
+    }
+
+    // Example buttons for testing
+    document.getElementById('saveButton').addEventListener('click', () => {
+      updateFinancialField('income', 1000); // Increase income by 1000
+    });
+
+    document.getElementById('decreaseIncomeButton').addEventListener('click', () => {
+      updateFinancialField('income', -500); // Decrease income by 500
+    });
+
+    document.getElementById('increaseBudgetButton').addEventListener('click', () => {
+      updateFinancialField('budget', 200); // Increase budget by 200
+    });
+
+    document.getElementById('decreaseBudgetButton').addEventListener('click', () => {
+      updateFinancialField('budget', -100); // Decrease budget by 100
+    });
+
+    // Login function for testing (using a test user)
+    document.getElementById('loginButton').addEventListener('click', () => {
+      const email = "jagok18621@buides.com";  // Replace with valid email
+      const password = "123456";       // Replace with valid password
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          console.log("Logged in with UID:", userCredential.user.uid);
+        })
+        .catch((error) => {
+          console.error("Login failed:", error.message);
+        });
+    });
+
+  </script>
+</head>
+<body>
+
+  <h1>Trackify - Financial Information</h1>
+
+  <!-- Buttons to save, update, and load financial data -->
+  <button id="saveButton">Increase Income by 1000</button>
+  <button id="decreaseIncomeButton">Decrease Income by 500</button>
+  <button id="increaseBudgetButton">Increase Budget by 200</button>
+  <button id="decreaseBudgetButton">Decrease Budget by 100</button>
+  <button id="loadButton">Load Financial Info</button>
+
+  <!-- Optional Login (for testing purposes) -->
+  <button id="loginButton">Login (Use test email/password)</button>
+
+</body>
+</html>
