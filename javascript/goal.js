@@ -22,8 +22,6 @@ const auth = getAuth();
 // let trackDetails;
 let currentUser;
 
-
-
 const goalForm = document.getElementById("goalForm");
 const goalModal = document.getElementById("goalModal");
 

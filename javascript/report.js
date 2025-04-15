@@ -167,30 +167,6 @@ async function loadCategoryChart() {
   }
 
 
-// Function to fetch and generate Expense Report
-// const startDate = document.getElementById("startDate").value
-// const endDate = document.getElementById("endDate").value
-// generateReportBtn.addEventListener("click", generateExpenseReport)
-// async function generateExpenseReport(startDate, endDate) {
-//   const summaryRef = collection(db, "Users", currentUser.uid, "summaryInfo");
-//   const q = query(
-//     summaryRef,
-//     where("type", "==", "expense"),
-//     where("date", ">=", startDate),
-//     where("date", "<=", endDate),
-//     orderBy("date")
-//   );
-
-//   const querySnapshot = await getDocs(q);
-//   let totalExpenses = 0;
-//   querySnapshot.forEach((doc) => {
-//     const data = doc.data();
-//     totalExpenses += data.amount;
-//   });
-
-//   return totalExpenses;
-// }
-
 async function displayAllUserProfile() {
     try {
         const docRef = doc(colRef, currentUser.uid);
@@ -480,25 +456,13 @@ function getWeekNumber(date) {
     // Average Daily Spend
     const uniqueDates = [...new Set(data.map(item => new Date(item.date.seconds * 1000).toDateString()))];
     const avgDailySpend = (totalSpending / uniqueDates.length).toFixed(2) || 0;
-  
-    // Budget Adherence (Mocked for now)
-    // const adherencePercentage = 82; // Replace with actual logic later
-    // const overCategories = 3; // Replace with actual logic later
-  
-    // 🧠 Update UI Cards
+
     document.getElementById("spendingTotal").textContent = `$${totalSpending.toFixed(2)}`;
     document.getElementById("topCategory").textContent = `${topCategory}`;
     document.getElementById("topCategoryAmount").textContent = `$${topCategoryAmount.toFixed(2)} (${((topCategoryAmount / totalSpending) * 100).toFixed(0)}%)`;
     document.getElementById("spendDaily").textContent = `$${avgDailySpend}`;
-    // document.getElementById("budgetAdherence").textContent = `${adherencePercentage}%`;
-    // document.getElementById("budgetNote").textContent = `${overCategories} categories over`;
-  
-    // ✅ Update Chart and Table
-    // renderCategoryChart(data);
-    // renderLineChart(data); // <-- Coming in Step 2
-    // renderTable(data);
   }
-  // Example Firebase Fetch (adjust based on your code)
+
 const fetchData = async () => {
   const uid = currentUser.uid;
   const snapshot = await collection(db, `Users/${uid}/summaryInfo`);
