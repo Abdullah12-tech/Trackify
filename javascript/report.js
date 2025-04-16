@@ -447,7 +447,7 @@ function getWeekNumber(date) {
       categoryMap[item.category] += item.amount || 0;
     });
   
-    let topCategory = '';
+    let topCategory = '' || "No Data";
     let topCategoryAmount = 0;
   
     for (let [category, amount] of Object.entries(categoryMap)) {

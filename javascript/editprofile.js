@@ -28,9 +28,9 @@ async function displayAllUserProfile() {
     try {
         const docRef = doc(colRef, currentUser.uid);
         const docSnap = await getDoc(docRef);
-        console.log(docSnap);
+        // console.log(docSnap);
         const actualData = docSnap.data();
-        console.log(actualData);
+        // console.log(actualData);
         profileImg.src = `${actualData.photo}`;
         profileImg2.src = `${actualData.photo}`;
         username.textContent = actualData.username
@@ -40,29 +40,30 @@ async function displayAllUserProfile() {
         uploadDetailsForm.address.value = actualData.address
         uploadDetailsForm.nation.value = actualData.nation
         uploadDetailsForm.zipcode.value = actualData.zipcode
-        uploadDetailsForm.fullName.disabled = true;
-        uploadDetailsForm.phone.disabled = true;
-        uploadDetailsForm.zipcode.disabled = true;
-        uploadDetailsForm.nation.disabled = true;
-        uploadDetailsForm.address.disabled = true;
-        uploadDetailsForm.photo.disabled = true;
-        saveBtn.disabled = true;
+        // uploadDetailsForm.fullName.disabled = true;
+        // uploadDetailsForm.phone.disabled = true;
+        // uploadDetailsForm.zipcode.disabled = true;
+        // uploadDetailsForm.nation.disabled = true;
+        // uploadDetailsForm.address.disabled = true;
+        // uploadDetailsForm.photo.disabled = true;
+        // saveBtn.disabled = true;
     } catch (err) {
         console.log(err);
     }
 }
 
+
 editBtn.addEventListener("click", editUserDetails);
 async function editUserDetails(e) {
     e.preventDefault();
-    uploadDetailsForm.fullName.disabled = false;
-    uploadDetailsForm.phone.disabled = false;
-    uploadDetailsForm.zipcode.disabled = false;
-    uploadDetailsForm.nation.disabled = false;
-    uploadDetailsForm.address.disabled = false;
-    uploadDetailsForm.photo.disabled = false;
-    saveBtn.disabled = false;
-    editBtn.disabled = true
+    // uploadDetailsForm.fullName.disabled = false;
+    // uploadDetailsForm.phone.disabled = false;
+    // uploadDetailsForm.zipcode.disabled = false;
+    // uploadDetailsForm.nation.disabled = false;
+    // uploadDetailsForm.address.disabled = false;
+    // uploadDetailsForm.photo.disabled = false;
+    // saveBtn.disabled = false;
+    // editBtn.disabled = true
 
 }
 const fileInput = document.getElementById('photoToUpload');
@@ -112,17 +113,15 @@ document.addEventListener("click", async (e) =>{
             let docRef = await doc(colRef, currentUser.uid);
             await updateDoc(docRef, userDetails);
 
-            alert("User Information updated successfully");
-            window.location.reload()
-
-            uploadDetailsForm.fullName.disabled = true;
-            uploadDetailsForm.phone.disabled = true;
-            uploadDetailsForm.zipcode.disabled = true;
-            uploadDetailsForm.nation.disabled = true;
-            uploadDetailsForm.address.disabled = true;
-            uploadDetailsForm.photo.disabled = true;
-            saveBtn.disabled = true;
-            editBtn.disabled = false;
+            // alert("User Information updated successfully");
+            // window.location.reload()
+            Swal.fire({
+            icon: 'success',    // Success icon
+            title: 'Success!',  // Title
+            text: 'Your information has been updated successfully.', // Message
+            confirmButtonText: 'Okay'  // Button text
+            });
+            displayAllUserProfile();
 
         } catch (err) {
             console.log(err);

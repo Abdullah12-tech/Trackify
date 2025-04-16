@@ -74,7 +74,13 @@ budgetForm.addEventListener("submit", async (e) => {
     };
     try {
         await addDoc(budgetRef, budgetInfo);
-        alert("Budget information added successfully");
+        Swal.fire({
+          icon: 'success',    // Success icon
+          title: 'Success!',  // Title
+          text: 'Your Budget information has been added successfully.', // Message
+          confirmButtonText: 'Okay'  // Button text
+        });
+        ExpenseModal.classList.add("hidden")
         budgetModal.classList.add("hidden");
     } catch (err) {
         console.log(err);
@@ -281,7 +287,6 @@ async function displayBudgetDetails() {
         categorySpent[cat] = (categorySpent[cat] || 0) + amt;
       });
   
-      // Display budgets
       if (budgetSnapshot.empty) {
         // Display message if no budgets found
 
@@ -325,6 +330,7 @@ async function displayBudgetDetails() {
       budgetTable.innerHTML = '<tr><td colspan="6" class="text-red-500 text-center py-4">Failed to load budgets.</td></tr>';
     }
   }
+  displayBudgetDetails();
   
   
 
@@ -409,7 +415,7 @@ onAuthStateChanged(auth, (user) =>{
     
     
     displayAllUserProfile(currentUser);
-    // displayBudgetDetails(currentUser);
+    displayBudgetDetails(currentUser);
     compareBudgetVsSpending(currentUser);
     }else{
         console.log("Not signed in yet.");
