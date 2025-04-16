@@ -434,7 +434,11 @@ function getWeekNumber(date) {
   function renderReportSummary(data) {
     console.log("Fetched data:", data);
   
-    const totalSpending = data.reduce((sum, item) => sum + item.amount, 0);
+    let totalSpending = 0;
+    for (let i = 0; i < data.length; i++) {
+      totalSpending += data[i].amount
+      
+    }
   
     // Top Category
     const categoryMap = {};
@@ -481,8 +485,6 @@ const fetchData = async () => {
   // Call the function to render the report summary immediately after fetching data
   renderReportSummary(results);
 }
-
-// Call fetchData immediately or on window load (if using vanilla JS) // Or you can trigger this when necessary (like on page load)
 
   function renderReport(data) {
     // ✅ You can calculate totals, populate cards, chart, and table here

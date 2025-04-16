@@ -83,248 +83,248 @@ budgetForm.addEventListener("submit", async (e) => {
 
 
 
+// async function compareBudgetVsSpending() {
+//   const now = new Date();
+//   const currentMonth = now.toLocaleString('default', { month: 'short', year: 'numeric' });
+//   try {
+//     const summaryRef = collection(colRef, currentUser.uid, "summaryInfo");
+//     const expensesSnapshot = await getDocs(summaryRef);
+//     const budgetRef = collection(colRef, currentUser.uid, 'budgetInfo');
+//     const budgetQuery = query(budgetRef, where("currentMonth", "==", currentMonth));
+//     const budgetSnapshot = await getDocs(budgetQuery);
+
+//     if (budgetSnapshot.empty) {
+//       console.log("No budget set for this month.");
+//       return;
+//     }
+
+//     const budget = {}
+//     budgetSnapshot.forEach((doc) =>{
+//       const data = doc.data();
+//       budget[data.budgetCategory] = Number(data.amount)  || 0
+//       console.log(budget)
+//     })
+
+//     const categoryTotals = {}
+//     expensesSnapshot.forEach((expense) =>{
+//       const actualExpense = expense.data();
+//       if (actualExpense.type !== "expense") return;
+//       const expenseMonth = actualExpense.date.toDate().toLocaleString('default', { month: 'short', year: 'numeric' });
+//       if (expenseMonth !== currentMonth) return;
+//       const category = actualExpense.category;
+//       const amount = actualExpense.amount
+//       categoryTotals[category] = (categoryTotals[category] || 0) + amount
+//       console.log(categoryTotals);
+//     })
+
+//     for (let cat in budget){
+//       const spent = categoryTotals[cat] || 0;
+//       const limit = budget[cat] || 0;
+//       const remaining = limit - spent;
+//       console.log(remaining,limit,spent);
+//     }
+//     let totalBudget = 0;
+//       let totalSpent = 0;
+//       for (let cat in budget){
+//         totalBudget += budget[cat];
+//         totalSpent += categoryTotals[cat] || 0;
+//         console.log(totalBudget,totalSpent);
+        
+//       }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+
 async function compareBudgetVsSpending() {
-  const now = new Date();
-  const currentMonth = now.toLocaleString('default', { month: 'short', year: 'numeric' });
-  try {
-    const summaryRef = collection(colRef, currentUser.uid, "summaryInfo");
-    const expensesSnapshot = await getDocs(summaryRef);
-    const budgetRef = collection(colRef, currentUser.uid, 'budgetInfo');
-    const budgetQuery = query(budgetRef, where("currentMonth", "==", currentMonth));
-    const budgetSnapshot = await getDocs(budgetQuery);
-
-    if (budgetSnapshot.empty) {
-      console.log("No budget set for this month.");
-      return;
-    }
-
-    const budget = {}
-    budgetSnapshot.forEach((doc) =>{
-      const data = doc.data();
-      budget[data.budgetCategory] = Number(data.amount)  || 0
-      console.log(budget)
-    })
-
-    const categoryTotals = {}
-    expensesSnapshot.forEach((expense) =>{
-      const actualExpense = expense.data();
-      if (actualExpense.type !== "expense") return;
-      const expenseMonth = actualExpense.date.toDate().toLocaleString('default', { month: 'short', year: 'numeric' });
-      if (expenseMonth !== currentMonth) return;
-      const category = actualExpense.category;
-      const amount = actualExpense.amount
-      categoryTotals[category] = (categoryTotals[category] || 0) + amount
-      console.log(categoryTotals);
-    })
-
-    for (let cat in budget){
-      const spent = categoryTotals[cat] || 0;
-      const limit = budget[cat] || 0;
-      const remaining = limit - spent;
-      console.log(remaining,limit,spent);
-    }
-    let totalBudget = 0;
-      let totalSpent = 0;
-      for (let cat in budget){
-        totalBudget += budget[cat];
-        totalSpent += categoryTotals[cat] || 0;
-        console.log(totalBudget,totalSpent);
+    const now = new Date();
+    const currentMonth = now.toLocaleString('default', { month: 'short', year: 'numeric' });
+  
+    try {
+      const summaryRef = collection(colRef, currentUser.uid, "summaryInfo");
+      const expensesSnapshot = await getDocs(summaryRef);
+  
+      const budgetRef = collection(colRef, currentUser.uid, 'budgetInfo');
+      const budgetQuery = query(budgetRef, where("currentMonth", "==", currentMonth));
+      const budgetSnapshot = await getDocs(budgetQuery);
+  
+      if (budgetSnapshot.empty) {
+        console.log("No budget set for this month.");
+        return;
+      }
+  
+      // Extract budgets into a category:amount object
+      const budget = {};
+      budgetSnapshot.forEach(doc => {
+        const data = doc.data();
+        budget[data.budgetCategory] = Number(data.amount);
+      });
+      
+  
+      // Group expenses by category for this month
+      const categoryTotals = {};
+      if (expensesSnapshot.empty) {
+        budgetProgress.innerHTML = `<p class="text-black-500 text-sm">No expenses or budget data to show for ${currentMonth}.</p>`;
+        return;
         
       }
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-// async function compareBudgetVsSpending() {
-//     const now = new Date();
-//     const currentMonth = now.toLocaleString('default', { month: 'short', year: 'numeric' });
+      expensesSnapshot.forEach(doc => {
+        const data = doc.data();
+        if (data.type !== "expense") return;
   
-//     try {
-//       const summaryRef = collection(colRef, currentUser.uid, "summaryInfo");
-//       const expensesSnapshot = await getDocs(summaryRef);
+        const expenseMonth = data.date.toDate().toLocaleString('default', { month: 'short', year: 'numeric' });
+        if (expenseMonth === currentMonth) {
+          const category = data.category;
+          const amount = Number(data.amount) || 0;
+          categoryTotals[category] = (categoryTotals[category] || 0) + amount;
+        }
+      });
   
-//       const budgetRef = collection(colRef, currentUser.uid, 'budgetInfo');
-//       const budgetQuery = query(budgetRef, where("currentMonth", "==", currentMonth));
-//       const budgetSnapshot = await getDocs(budgetQuery);
+      const budgetProgress = document.getElementById('budgetProgress');
+      budgetProgress.innerHTML = ''; // Clear previous
   
-//       if (budgetSnapshot.empty) {
-//         console.log("No budget set for this month.");
-//         return;
-//       }
-  
-//       // Extract budgets into a category:amount object
-//       const budget = {};
-//       budgetSnapshot.forEach(doc => {
-//         const data = doc.data();
-//         budget[data.budgetCategory] = Number(data.amount);
-//       });
+      for (let cat in budget) {
+        const spent = categoryTotals[cat] || 0;
+        const limit = budget[cat];
+        const percent = limit > 0 ? Math.min((spent / limit) * 100, 100) : 0;
+        const percentText = Math.floor(percent);
+        let barColor = 'bg-green-500';
       
-  
-//       // Group expenses by category for this month
-//       const categoryTotals = {};
-//       if (expensesSnapshot.empty) {
-//         budgetProgress.innerHTML = `<p class="text-black-500 text-sm">No expenses or budget data to show for ${currentMonth}.</p>`;
-//         return;
-        
-//       }
-//       expensesSnapshot.forEach(doc => {
-//         const data = doc.data();
-//         if (data.type !== "expense") return;
-  
-//         const expenseMonth = data.date.toDate().toLocaleString('default', { month: 'short', year: 'numeric' });
-//         if (expenseMonth === currentMonth) {
-//           const category = data.category;
-//           const amount = Number(data.amount) || 0;
-//           categoryTotals[category] = (categoryTotals[category] || 0) + amount;
-//         }
-//       });
-  
-//       const budgetProgress = document.getElementById('budgetProgress');
-//       budgetProgress.innerHTML = ''; // Clear previous
-  
-//       for (let cat in budget) {
-//         const spent = categoryTotals[cat] || 0;
-//         const limit = budget[cat];
-//         const percent = limit > 0 ? Math.min((spent / limit) * 100, 100) : 0;
-//         const percentText = Math.floor(percent);
-//         let barColor = 'bg-green-500';
+        if (percent >= 90) barColor = 'bg-red-500';
+        else if (percent >= 70) barColor = 'bg-yellow-500';
+        else if (percent >= 40) barColor = 'bg-blue-500';
       
-//         if (percent >= 90) barColor = 'bg-red-500';
-//         else if (percent >= 70) barColor = 'bg-yellow-500';
-//         else if (percent >= 40) barColor = 'bg-blue-500';
-      
-//         // Show alert if the limit is exceeded
-//         if (spent > limit) {
-//             const toast = document.getElementById('budgetToast');
-//             toast.textContent = `⚠️ Budget exceeded for ${cat}: $${spent.toLocaleString()} / $${limit.toLocaleString()}`;
-//             toast.classList.remove('hidden');
-//             setTimeout(() => toast.classList.add('hidden'), 5000);
+        // Show alert if the limit is exceeded
+        if (spent > limit) {
+            const toast = document.getElementById('budgetToast');
+            toast.textContent = `⚠️ Budget exceeded for ${cat}: $${spent.toLocaleString()} / $${limit.toLocaleString()}`;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 5000);
             
-//         }
+        }
       
-//         budgetProgress.innerHTML += `
-//           <div class="mb-4">
-//             <div class="flex justify-between text-sm font-medium mb-1">
-//               <span class="capitalize text-gray-700">${cat}</span>
-//               <span class="text-gray-600">$${spent.toLocaleString()} / $${limit.toLocaleString()} (${percentText}%)</span>
-//             </div>
-//             <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
-//               <div class="${barColor} h-full rounded-full transition-all duration-500 ease-in-out" style="width: ${percent}%"></div>
-//             </div>
-//           </div>
-//         `;
+        budgetProgress.innerHTML += `
+          <div class="mb-4">
+            <div class="flex justify-between text-sm font-medium mb-1">
+              <span class="capitalize text-gray-700">${cat}</span>
+              <span class="text-gray-600">$${spent.toLocaleString()} / $${limit.toLocaleString()} (${percentText}%)</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+              <div class="${barColor} h-full rounded-full transition-all duration-500 ease-in-out" style="width: ${percent}%"></div>
+            </div>
+          </div>
+        `;
 
-//         // Totals
-//             let totalBudget = 0;
-//             let totalSpent = 0;
+        // Totals
+            let totalBudget = 0;
+            let totalSpent = 0;
 
-//             for (let cat in budget) {
-//               totalBudget += budget[cat];
-//               totalSpent += categoryTotals[cat] || 0;
-//             }
+            for (let cat in budget) {
+              totalBudget += budget[cat];
+              totalSpent += categoryTotals[cat] || 0;
+            }
 
-//             const totalRemaining = totalBudget - totalSpent;
-//             const percentSpent = totalBudget > 0 ? Math.min((totalSpent / totalBudget) * 100, 100) : 0;
-//             const percentRemaining = 100 - percentSpent;
+            const totalRemaining = totalBudget - totalSpent;
+            const percentSpent = totalBudget > 0 ? Math.min((totalSpent / totalBudget) * 100, 100) : 0;
+            const percentRemaining = 100 - percentSpent;
 
-//             // Display or use it however you like
-//             console.log("Total Budget: ₦" + totalBudget.toLocaleString());
-//             console.log("Total Spent: ₦" + totalSpent.toLocaleString());
-//             console.log("Remaining: ₦" + totalRemaining.toLocaleString());
-//             console.log("Percent Spent: " + Math.floor(percentSpent) + "%");
-//             console.log("Percent Remaining: " + Math.floor(percentRemaining) + "%");
-//             totalRemainingDisplay.textContent = `$${totalRemaining.toLocaleString()}` || `$0.00`
-//             totalSpentDisplay.textContent = `$${totalSpent.toLocaleString()}` || `$0.00`
-//             totalBudgetDisplay.textContent = `$${totalBudget.toLocaleString()}` || `$0.00`;
-//             spentRemaining.textContent = (Math.floor(percentSpent) + "%") || `0%`
-//             remainingDisp.textContent = (Math.floor(percentRemaining) + "%") || `0%`
+            // Display or use it however you like
+            console.log("Total Budget: ₦" + totalBudget.toLocaleString());
+            console.log("Total Spent: ₦" + totalSpent.toLocaleString());
+            console.log("Remaining: ₦" + totalRemaining.toLocaleString());
+            console.log("Percent Spent: " + Math.floor(percentSpent) + "%");
+            console.log("Percent Remaining: " + Math.floor(percentRemaining) + "%");
+            totalRemainingDisplay.textContent = `$${totalRemaining.toLocaleString()}` || `$0.00`
+            totalSpentDisplay.textContent = `$${totalSpent.toLocaleString()}` || `$0.00`
+            totalBudgetDisplay.textContent = `$${totalBudget.toLocaleString()}` || `$0.00`;
+            spentRemaining.textContent = (Math.floor(percentSpent) + "%") || `0%`
+            remainingDisp.textContent = (Math.floor(percentRemaining) + "%") || `0%`
 
-//       }
+      }
       
-//     } catch (error) {
-//       console.error("Error comparing budget vs spending:", error);
-//     }
-//   }
+    } catch (error) {
+      console.error("Error comparing budget vs spending:", error);
+    }
+  }
   
   
   
 
 
-// async function displayBudgetDetails() {
-//     const now = new Date();
-//     const currentMonth = now.toLocaleString('default', { month: 'short', year: 'numeric' });
+async function displayBudgetDetails() {
+    const now = new Date();
+    const currentMonth = now.toLocaleString('default', { month: 'short', year: 'numeric' });
   
-//     const budgetTable = document.getElementById('budgetContainer');
-//     budgetTable.innerHTML = ''; // Clear table body
+    const budgetTable = document.getElementById('budgetContainer');
+    budgetTable.innerHTML = ''; // Clear table body
   
-//     try {
-//       const userRef = doc(colRef, currentUser.uid);
-//       const budgetRef = collection(userRef, "budgetInfo");
-//       const budgetSnapshot = await getDocs(budgetRef);
+    try {
+      const userRef = doc(colRef, currentUser.uid);
+      const budgetRef = collection(userRef, "budgetInfo");
+      const budgetSnapshot = await getDocs(budgetRef);
   
-//       // Get expenses
-//       const summaryRef = collection(colRef, currentUser.uid, "summaryInfo");
-//       const expensesSnapshot = await getDocs(summaryRef);
+      // Get expenses
+      const summaryRef = collection(colRef, currentUser.uid, "summaryInfo");
+      const expensesSnapshot = await getDocs(summaryRef);
   
-//       // Group expenses by category
-//       const categorySpent = {};
-//       expensesSnapshot.forEach(doc => {
-//         const data = doc.data();
-//         if (data.type !== "expense") return;
+      // Group expenses by category
+      const categorySpent = {};
+      expensesSnapshot.forEach(doc => {
+        const data = doc.data();
+        if (data.type !== "expense") return;
   
-//         const expenseMonth = data.date.toDate().toLocaleString('default', { month: 'short', year: 'numeric' });
-//         if (expenseMonth !== currentMonth) return;
+        const expenseMonth = data.date.toDate().toLocaleString('default', { month: 'short', year: 'numeric' });
+        if (expenseMonth !== currentMonth) return;
   
-//         const cat = data.category;
-//         const amt = Number(data.amount) || 0;
-//         categorySpent[cat] = (categorySpent[cat] || 0) + amt;
-//       });
+        const cat = data.category;
+        const amt = Number(data.amount) || 0;
+        categorySpent[cat] = (categorySpent[cat] || 0) + amt;
+      });
   
-//       // Display budgets
-//       if (budgetSnapshot.empty) {
-//         // Display message if no budgets found
+      // Display budgets
+      if (budgetSnapshot.empty) {
+        // Display message if no budgets found
 
-//         budgetTable.innerHTML = '<tr><td colspan="6" class="p-3 text-center ">No budgets found.</td></tr>';
-//         return;
-//       }
-//       budgetSnapshot.forEach(docSnap => {
-//         const data = docSnap.data();
-//         const id = docSnap.id;
-//         const isActive = data.currentMonth === currentMonth;
-//         const statusColor = isActive ? 'text-green-500' : 'text-red-500';
-//         const statusText = isActive ? 'Active' : 'Expired';
+        budgetTable.innerHTML = '<tr><td colspan="6" class="p-3 text-center ">No budgets found.</td></tr>';
+        return;
+      }
+      budgetSnapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        const id = docSnap.id;
+        const isActive = data.currentMonth === currentMonth;
+        const statusColor = isActive ? 'text-green-500' : 'text-red-500';
+        const statusText = isActive ? 'Active' : 'Expired';
   
-//         const cat = data.budgetCategory;
-//         const budgetAmount = Number(data.amount) || 0;
-//         const spent = categorySpent[cat] || 0;
-//         const percentUsed = budgetAmount > 0 ? Math.min((spent / budgetAmount) * 100, 100) : 0;
-//         const percentText = Math.floor(percentUsed);
+        const cat = data.budgetCategory;
+        const budgetAmount = Number(data.amount) || 0;
+        const spent = categorySpent[cat] || 0;
+        const percentUsed = budgetAmount > 0 ? Math.min((spent / budgetAmount) * 100, 100) : 0;
+        const percentText = Math.floor(percentUsed);
   
-//         budgetTable.innerHTML += `
-//           <tr>
-//             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${data.name || '-'}</td>
-//             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${cat}</td>
-//             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">$${budgetAmount.toLocaleString()}</td>
-//             <td class="${statusColor} px-6 py-4 whitespace-nowrap text-sm text-gray-500">${statusText}</td>
-//             <td class="px-6 py-4 whitespace-nowrap">
-//               <div class="w-full bg-gray-200 rounded-full h-2">
-//                 <div class="bg-green-500 h-2 rounded-full transition-all duration-300 ease-in-out" style="width: ${percentUsed}%;"></div>
-//               </div>
-//             </td>
-//             <td class="px-6 py-4 whitespace-nowrap text-sm">
-//               <button onclick="editBudget('${id}')" class="text-blue-600 hover:text-blue-800 mr-3">Edit</button>
-//               <button onclick="deleteBudget('${id}')" class="text-red-600 hover:text-red-800">Delete</button>
-//             </td>
-//           </tr>
-//         `;
-//       });
+        budgetTable.innerHTML += `
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">${data.name || '-'}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${cat}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">$${budgetAmount.toLocaleString()}</td>
+            <td class="${statusColor} px-6 py-4 whitespace-nowrap text-sm text-gray-500">${statusText}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-green-500 h-2 rounded-full transition-all duration-300 ease-in-out" style="width: ${percentUsed}%;"></div>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm">
+              <button onclick="editBudget('${id}')" class="text-blue-600 hover:text-blue-800 mr-3">Edit</button>
+              <button onclick="deleteBudget('${id}')" class="text-red-600 hover:text-red-800">Delete</button>
+            </td>
+          </tr>
+        `;
+      });
   
-//     } catch (error) {
-//       console.error('Error loading budgets:', error);
-//       budgetTable.innerHTML = '<tr><td colspan="6" class="text-red-500 text-center py-4">Failed to load budgets.</td></tr>';
-//     }
-//   }
+    } catch (error) {
+      console.error('Error loading budgets:', error);
+      budgetTable.innerHTML = '<tr><td colspan="6" class="text-red-500 text-center py-4">Failed to load budgets.</td></tr>';
+    }
+  }
   
   
 
