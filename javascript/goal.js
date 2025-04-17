@@ -116,7 +116,14 @@ function fetchAndRenderGoals(currentUser) {
     progressContainer.innerHTML = '';
     tableBody.innerHTML = '';
     if (snapshot.empty) {
-      progressContainer.innerHTML = '<p>No goals found.</p>';
+      progressContainer.innerHTML = `
+        <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100">
+          <tr>
+            <td colspan="6" class="text-center px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">No data here yet</td>
+            
+          </tr>
+        </div>
+      `;
       tableBody.innerHTML = `
           <tr>
             <td colspan="6" class="text-center px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">No data here yet</td>

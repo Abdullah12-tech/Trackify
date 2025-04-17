@@ -80,67 +80,16 @@ budgetForm.addEventListener("submit", async (e) => {
           text: 'Your Budget information has been added successfully.', // Message
           confirmButtonText: 'Okay'  // Button text
         });
-        ExpenseModal.classList.add("hidden")
+        // ExpenseModal.classList.add("hidden")
         budgetModal.classList.add("hidden");
+        displayBudgetDetails();
+        compareBudgetVsSpending();
     } catch (err) {
         console.log(err);
     }
 });
 
 
-
-// async function compareBudgetVsSpending() {
-//   const now = new Date();
-//   const currentMonth = now.toLocaleString('default', { month: 'short', year: 'numeric' });
-//   try {
-//     const summaryRef = collection(colRef, currentUser.uid, "summaryInfo");
-//     const expensesSnapshot = await getDocs(summaryRef);
-//     const budgetRef = collection(colRef, currentUser.uid, 'budgetInfo');
-//     const budgetQuery = query(budgetRef, where("currentMonth", "==", currentMonth));
-//     const budgetSnapshot = await getDocs(budgetQuery);
-
-//     if (budgetSnapshot.empty) {
-//       console.log("No budget set for this month.");
-//       return;
-//     }
-
-//     const budget = {}
-//     budgetSnapshot.forEach((doc) =>{
-//       const data = doc.data();
-//       budget[data.budgetCategory] = Number(data.amount)  || 0
-//       console.log(budget)
-//     })
-
-//     const categoryTotals = {}
-//     expensesSnapshot.forEach((expense) =>{
-//       const actualExpense = expense.data();
-//       if (actualExpense.type !== "expense") return;
-//       const expenseMonth = actualExpense.date.toDate().toLocaleString('default', { month: 'short', year: 'numeric' });
-//       if (expenseMonth !== currentMonth) return;
-//       const category = actualExpense.category;
-//       const amount = actualExpense.amount
-//       categoryTotals[category] = (categoryTotals[category] || 0) + amount
-//       console.log(categoryTotals);
-//     })
-
-//     for (let cat in budget){
-//       const spent = categoryTotals[cat] || 0;
-//       const limit = budget[cat] || 0;
-//       const remaining = limit - spent;
-//       console.log(remaining,limit,spent);
-//     }
-//     let totalBudget = 0;
-//       let totalSpent = 0;
-//       for (let cat in budget){
-//         totalBudget += budget[cat];
-//         totalSpent += categoryTotals[cat] || 0;
-//         console.log(totalBudget,totalSpent);
-        
-//       }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
 
 async function compareBudgetVsSpending() {
     const now = new Date();
@@ -330,7 +279,7 @@ async function displayBudgetDetails() {
       budgetTable.innerHTML = '<tr><td colspan="6" class="text-red-500 text-center py-4">Failed to load budgets.</td></tr>';
     }
   }
-  displayBudgetDetails();
+  
   
   
 
@@ -415,8 +364,8 @@ onAuthStateChanged(auth, (user) =>{
     
     
     displayAllUserProfile(currentUser);
-    displayBudgetDetails(currentUser);
-    compareBudgetVsSpending(currentUser);
+    displayBudgetDetails();
+    compareBudgetVsSpending();
     }else{
         console.log("Not signed in yet.");
         location.href = "../pages/login.html"
