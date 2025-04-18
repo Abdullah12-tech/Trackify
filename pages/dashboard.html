@@ -169,7 +169,7 @@
                     <!-- Mobile hamburger -->
                     <button class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
                         @click="toggleSideMenu" aria-label="Menu">
-                        <x-heroicon-o-menu class="w-6 h-6 stroke-black dark:stroke-white fill-none" />
+                        <x-heroicon-o-menu class="w-6 h-6 text-black dark:text-white stroke-black dark:stroke-white fill-none" />
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 " fill="currentColor"
                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -414,14 +414,14 @@
                                 </div>
                               
                                 <!-- Chart Container -->
-                                <div class="relative w-full">
+                                <div class="relative w-full h-96">
                                   <!-- Loading Spinner -->
                                   <!-- <div id="chartLoader" class="absolute inset-0 flex items-center justify-center">
                                     <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
                                   </div> -->
                                   
                                   <!-- Chart Canvas -->
-                                  <canvas id="monthlyChart" class="w-full text-white h-full"></canvas>
+                                  <canvas id="monthlyChart" class="w-full min-w-full text-white h-96"></canvas>
                                 </div>
                             </div>
                             <div class="col-span-12 mt-5">

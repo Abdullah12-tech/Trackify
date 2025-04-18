@@ -51,8 +51,17 @@ async function logInUser(e) {
             return
         }
         console.log(user);
-        alert("Login Successful")
-        location.href = "../pages/dashboard.html"
+        Swal.fire({
+            icon: 'success',    // Success icon
+            title: 'Success!',  // Title
+            text: 'Logged in Successfully', // Message
+            confirmButtonText: 'Okay'  // Button text
+          }).then((result)=>{
+            if (result.isConfirmed) {
+                location.href = "../pages/dashboard.html"
+                
+            }
+          })
         errorP.textContent = ""
         verify.textContent = ""
     } catch (error) {

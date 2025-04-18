@@ -120,7 +120,12 @@ document.addEventListener("click", async (e) =>{
             title: 'Success!',  // Title
             text: 'Your information has been updated successfully.', // Message
             confirmButtonText: 'Okay'  // Button text
-            });
+            }).then((result)=>{
+              if (result.isConfirmed) {
+                window.location.href = "../pages/dashboard.html";
+                
+              }
+            })
             displayAllUserProfile();
 
         } catch (err) {
@@ -152,7 +157,12 @@ async function changePassword(e) {
     }
 
     if (newPassword.value !== confirmPassword.value) {
-        alert("Password does not match");
+      Swal.fire({
+        icon: 'error',
+        title: 'Password Mismatch',
+        text: 'Please check your password and try again.',
+        confirmButtonText: 'Try Again'
+      });
         return
     }
 
@@ -162,13 +172,27 @@ async function changePassword(e) {
         await reauthenticateWithCredential(currentUser, credential);
 
         await updatePassword(currentUser, newPassword.value);
-        alert("Password has been changed successfully");
-        location.href = "../pages/dashboard.html"
+        Swal.fire({
+          icon: 'success',
+          title: 'Password Changed',
+          text: 'Password changed successfully',
+          confirmButtonText: 'success'
+        }).then((result)=>{
+          if (result.isConfirmed) {
+            location.href = "../pages/dashboard.html";
+
+          }
+        })
         
     } catch (err) {
         console.log(err);
         if (err.message = "Firebase: Error (auth/invalid-credential).") {
-            alert("Incorrect password");
+          Swal.fire({
+            icon: 'error',
+            title: 'Incorrect Password',
+            text: 'Please check your password and try again.',
+            confirmButtonText: 'Try Again'
+          });
         }
     }
 }

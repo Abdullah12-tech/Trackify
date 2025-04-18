@@ -36,10 +36,7 @@ const userColRef = collection(db, "Users");
 signUpForm.addEventListener("submit", createUserAccount);
 
 async function createUserAccount(e) {
-  try {
-    spinner.classList.remove("d-none");
-    errorP.textContent = "";
-    e.preventDefault();
+  e.preventDefault();
     const userDetails = {
       name: signUpForm.fullName.value.trim(),
       email: signUpForm.email.value.trim(),
@@ -47,7 +44,11 @@ async function createUserAccount(e) {
       confirmPassword: signUpForm.confirmPassword.value.trim(),
       username: signUpForm.username.value.trim(),
     };
-
+    
+  try {   
+    spinner.classList.remove("d-none");
+    errorP.textContent = "";
+    signUpBtn.disabled = true;
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
     if (signUpForm.name.value === "" 
@@ -56,16 +57,20 @@ async function createUserAccount(e) {
     || signUpForm.confirmPassword.value === ""
    || signUpForm.username.value === "") {
       throw new Error("Ensure all fields are filled");
+      return;
     }
     if (!emailRegex.test(userDetails.email)) {
       throw new Error("*Invalid Email address");
+      return;
     }
     if (userDetails.password.length < 6) {
       throw new Error("Password should be at least 6 characters");
+      return;
     }
     if (userDetails.password !== userDetails.confirmPassword) {
       throw new Error("Password does not match");
-    }
+      return
+    } 
     const { password, confirmPassword, ...details } = userDetails;
     const res = await createUserWithEmailAndPassword(
       auth,
@@ -77,8 +82,18 @@ async function createUserAccount(e) {
     const docRes = await setDoc(docRef, details);
     console.log(docRes);
     
-    alert("Account created successfully!");
-    location.href = "../pages/details.html";
+    Swal.fire({
+      icon: 'success',    // Success icon
+      title: 'Success!',  // Title
+      text: 'You have successfully signed Up.', // Message
+      confirmButtonText: 'Okay'  // Button text
+    }).then((result)=>{
+      if (result.isConfirmed) {
+        location.href = "../pages/details.html";
+
+      }
+    })
+   
   } catch (error) {
     if (error.message === "Firebase: Error (auth/email-already-in-use).") {
       errorP.textContent = "Email already exists";
@@ -95,5 +110,6 @@ async function createUserAccount(e) {
     // alert(error.message);
   } finally {
     spinner.classList.add("d-none");
+    signUpBtn.disabled = false
   }
 }

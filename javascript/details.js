@@ -32,6 +32,7 @@ uploadDetailsForm.addEventListener("submit", uploadDetails);
 async function uploadDetails(e) {
   e.preventDefault();
   spinner.classList.remove("d-none");
+  errorP.textContent = ""
   const profilePhoto = document.getElementById("photoToUpload");
   const photoData = Alpine.$data(profilePhoto);
   const userDetails = {
@@ -53,12 +54,24 @@ async function uploadDetails(e) {
     let docRef = await doc(userColRef, currentUser.uid);
     let docSnap = await updateDoc(docRef, userDetails);
     console.log(docSnap);
-    location.href = "../pages/login.html"
-    alert("User Information successfully added");
+    Swal.fire({
+      icon: 'success',    // Success icon
+      title: 'Success!',  // Title
+      text: 'User information has been added successfully.', // Message
+      confirmButtonText: 'Okay'  // Button text
+    }).then((result)=>{
+      if (result.isConfirmed) {
+        location.href = "../pages/login.html"
+        
+      }
+    })
     spinner.classList.add("d-none");
   } catch (err) {
     console.log(err);
-    
+    errorP.textContent = err.message
+    if (err.message === "Firebase: Error (auth/network-request-failed).") {
+      errorP.textContent = "Check your network connection and try again"
+    }
     
   }
   finally{
