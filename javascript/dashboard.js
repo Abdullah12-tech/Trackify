@@ -507,6 +507,8 @@ document.addEventListener("click", async (e) => {
         });
         displayMainInfo();
         displayTrackedProfile();
+        loadCategoryChart();
+        loadFinancialSummary();
         IncomeModal.classList.add("hidden")
         // window.location.reload();
       } catch (err) {

@@ -103,11 +103,8 @@ async function compareBudgetVsSpending() {
       const budgetQuery = query(budgetRef, where("currentMonth", "==", currentMonth));
       const budgetSnapshot = await getDocs(budgetQuery);
   
-      if (budgetSnapshot.empty) {
-        console.log("No budget set for this month.");
-        return;
-      }
-  
+      const budgetProgress = document.getElementById('budgetProgress');
+      budgetProgress.innerHTML = ''; // Clear previous
       // Extract budgets into a category:amount object
       const budget = {};
       budgetSnapshot.forEach(doc => {
@@ -123,6 +120,11 @@ async function compareBudgetVsSpending() {
         return;
         
       }
+      if (budgetSnapshot.empty) {
+        budgetProgress.innerHTML = `<p class="text-black-500 text-center text-sm">No budget data to show for ${currentMonth}.</p>`;
+        return;
+        
+      }
       expensesSnapshot.forEach(doc => {
         const data = doc.data();
         if (data.type !== "expense") return;
@@ -135,8 +137,7 @@ async function compareBudgetVsSpending() {
         }
       });
   
-      const budgetProgress = document.getElementById('budgetProgress');
-      budgetProgress.innerHTML = ''; // Clear previous
+      
   
       for (let cat in budget) {
         const spent = categoryTotals[cat] || 0;
